@@ -8,19 +8,22 @@ const {MONGOURI} = require('./config/keys')
 mongoose.connect(MONGOURI,{
     useNewUrlParser:true,
     useUnifiedTopology: true
+})
 
-})
 mongoose.connection.on('connected',()=>{
-    console.log("conneted to mongodb")
+    console.log("COONECTED TO MONGO DB")
 })
+
 mongoose.connection.on('error',(err)=>{
-    console.log("err connecting",err)
+    console.log("ERROR IN CONNECTING TO MANGODB:",err)
 })
 
 require('./models/user')
 require('./models/post')
 
+app.use(express.json())
+app.use(require('./routes/auth'))
 
 app.listen(PORT,()=>{
-    console.log("server is running on",PORT)
+    console.log("SERVER IS RUNNING ON:",PORT)
 })

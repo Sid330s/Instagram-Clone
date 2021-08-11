@@ -1,5 +1,6 @@
-import React,{useState} from 'react'
+import React,{useState,useContext,} from 'react'
 import {Link,useHistory} from 'react-router-dom'
+import {UserContext} from '../App'
 import { FormWrapper } from "./authcard";
 import logo from "./imgs/images.png";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -8,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const SignIn  = ()=>{
+    const {dispatch} = useContext(UserContext)
     const history = useHistory()
     const [password,setPasword] = useState("")
     const [email,setEmail] = useState("")
@@ -38,6 +40,7 @@ const SignIn  = ()=>{
            else{
                localStorage.setItem("jwt",data.token)
                localStorage.setItem("user",JSON.stringify(data.user))
+               dispatch({type:"USER",payload:data.user})
 
                toast("LOG IN SUCCESSFUL",{position: toast.POSITION.TOP_LEFT})
                history.push('/myfollowingpost')

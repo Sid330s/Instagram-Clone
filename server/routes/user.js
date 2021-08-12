@@ -23,6 +23,25 @@ router.get('/user/:id',requireLogin,(req,res)=>{
     })
 })
 
+router.put('/bookmark/:id', requireLogin, async (req,res)=>{
+  const {id} = req.params;
+  const postBody = await Post.findById(id);
+  await User.findByIdAndUpdate(req.user._id,{
+    $push:{bookmarks: postBody}
+  },
+  {new : true},
+  (err, result) => {
+    if(err){
+      return res.status(422).json({error: err})
+    }
+    console.log(result.bookmarks[0].title);
+    res.json(result)
+  }).catch(err=>{
+    return res.status(422).json({error:err})
+  })
+
+})
+
 
 router.put('/follow',requireLogin,(req,res)=>{
     User.findByIdAndUpdate(req.body.followId,{
@@ -66,6 +85,7 @@ router.put('/unfollow',requireLogin,(req,res)=>{
     }
     )
 })
+
 
 router.put('/updatepic',requireLogin,(req,res)=>{
     User.findByIdAndUpdate(req.user._id,{$set:{pic:req.body.pic}},{new:true},

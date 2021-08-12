@@ -2,9 +2,21 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const User = mongoose.model("User")
+const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config/keys')
+const requireLogin = require('../middleware/requireLogin')
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+const {SENDGRID_API,HOST} = require('../config/keys')
+
+
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth:{
+        api_key:SENDGRID_API
+    }
+}))
 
 router.post('/signup',(req,res)=>{
   const {name,email,password,pic} = req.body

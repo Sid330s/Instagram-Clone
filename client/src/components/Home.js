@@ -5,6 +5,9 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { FilledHeartIcon , HeartIcon , CommentIcon} from "./Icons";
 import deletelogo from "./imgs/delete.png";
 import {Card, ListGroup, ListGroupItem, Row, Col, Dropdown, DropdownButton } from 'react-bootstrap';
+import {WhatsappShareButton, WhatsappIcon,FacebookShareButton, FacebookIcon,EmailShareButton,EmailIcon} from "react-share";
+import classes from './WhatsAppStyles';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import copylogo from './imgs/copy.png';
 
 const Home  = ()=>{
@@ -170,6 +173,52 @@ const Home  = ()=>{
                          </Col>
                          <Col style={{ paddingLeft: "5px"}} sm={8}>
                            <Card.Text>{item.likes.length}</Card.Text>
+                         </Col>
+                         <Col sm={2}>
+                           <DropdownButton id="dropdown-basic-button" title="Share">
+                             <Dropdown.Item>
+                               <CopyToClipboard text={`http://localhost:3000/sharedpost/${item._id}`}>
+                                 <span>
+                                   <img
+                                   className={classes.socialMediaButton}
+                                   src={copylogo}
+                                   alt="copylogo"
+                                   />
+                                 Copy Link
+                               </span>
+                               </CopyToClipboard>
+
+                               </Dropdown.Item>
+                               <Dropdown.Item>
+                               <WhatsappShareButton
+                                 url={`http://localhost:3000/sharedpost/${item._id}`}
+                                 title={"Hey look at this amazing post"}
+                                 separator=" "
+                                 className={classes.socialMediaButton}
+                               > <WhatsappIcon size={25} /> WhatsApp
+                               </WhatsappShareButton>
+                               </Dropdown.Item>
+                               <Dropdown.Item>
+                               <EmailShareButton
+                                 url={`http://localhost:3000/sharedpost/${item._id}`}
+                                 subject={"Hey look at this amazing post"}
+                                 body={"Your friend found this post intresting..."}
+                                 separator=" "
+                                 className={classes.socialMediaButton}
+                               > <EmailIcon size={25} /> Email
+                               </EmailShareButton>
+                               </Dropdown.Item>
+                               <Dropdown.Item>
+                               <FacebookShareButton
+                                 url={`http://localhost:3000/sharedpost/${item._id}`}
+                                 quote={"Hey look at this amazing post"}
+                                 hashtag="#InstaClone"
+                                 className={classes.socialMediaButton}
+                               > <FacebookIcon size={25} /> Facebook
+                               </FacebookShareButton>
+                               </Dropdown.Item>
+                           </DropdownButton>
+
                          </Col>
                        </Row>
                      </Card.Body>

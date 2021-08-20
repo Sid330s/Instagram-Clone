@@ -1,4 +1,4 @@
-import React,{useEffect,createContext,useReducer,useContext} from 'react';
+ import React,{useEffect,createContext,useReducer,useContext} from 'react';
 import NavBar from './components/Navbar'
 import "./App.css"
 import "react-toastify/dist/ReactToastify.css";
@@ -17,61 +17,61 @@ export const UserContext = createContext()
 
 
 const Routing = ()=>{
- const history = useHistory()
- const {dispatch} = useContext(UserContext)
- useEffect(()=>{
-   const user = JSON.parse(localStorage.getItem("user"))
-   if(user){
-     dispatch({type:"USER",payload:user})
-   }else{
-     if(!history.location.pathname.startsWith('/reset'))
-          history.push('/signin')
-   }
- },[dispatch, history])
- return(
-   <Switch>
-     <Route exact path="/" >
-     <Home />
-     </Route>
-     <Route path="/signin">
-       <Signin />
-     </Route>
-     <Route path="/signup">
-       <Signup />
-     </Route>
-     <Route exact path="/profile">
-       <Profile />
-     </Route>
-     <Route path="/create">
-       <CreatePost/>
-     </Route>
-     <Route path="/profile/:userid">
-       <UserProfile />
-     </Route>
-     <Route path="/sharedpost/:postId">
-       <Post/>
-     </Route>
-     <Route path="/myfollowingpost">
-       <SubscribedUserPosts />
-     </Route>
-     <Route exact path="/reset">
-       <Reset/>
-     </Route>
+  const history = useHistory()
+  const {dispatch} = useContext(UserContext)
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(user){
+      dispatch({type:"USER",payload:user})
+    }else{
+      if(!history.location.pathname.startsWith('/reset'))
+           history.push('/signin')
+    }
+  },[dispatch, history])
+  return(
+    <Switch>
+      <Route exact path="/" >
+      <Home />
+      </Route>
+      <Route path="/signin">
+        <Signin />
+      </Route>
+      <Route path="/signup">
+        <Signup />
+      </Route>
+      <Route exact path="/profile">
+        <Profile />
+      </Route>
+      <Route path="/create">
+        <CreatePost/>
+      </Route>
+      <Route path="/profile/:userid">
+        <UserProfile />
+      </Route>
+      <Route path="/sharedpost/:postId">
+        <Post/>
+      </Route>
+      <Route path="/myfollowingpost">
+        <SubscribedUserPosts />
+      </Route>
+      <Route exact path="/reset">
+        <Reset/>
+      </Route>
 
-   </Switch>
- )
+    </Switch>
+  )
 }
 
 function App() {
- const [state,dispatch] = useReducer(reducer,initialState)
- return (
-   <UserContext.Provider value={{state,dispatch}}>
-     <BrowserRouter>
-       <NavBar />
-       <Routing />
-     </BrowserRouter>
-   </UserContext.Provider>
- );
+  const [state,dispatch] = useReducer(reducer,initialState)
+  return (
+    <UserContext.Provider value={{state,dispatch}}>
+      <BrowserRouter>
+        <NavBar />
+        <Routing />
+      </BrowserRouter>
+    </UserContext.Provider>
+  );
 }
 
 export default App;

@@ -87,7 +87,7 @@ const SignUp  = ()=>{
                <button type="submit" className="btn btn-primary">Sign Up</button>
                <div className="form-group">
                  <p className="forgot-password text-center">
-                   Don't have an account? <Link to="/signin">Sign In</Link>
+                   Already Have Account ? <Link to="/signin">Sign In</Link>
                  </p>
                </div>
        </form>

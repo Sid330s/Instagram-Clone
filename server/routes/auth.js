@@ -81,5 +81,36 @@ router.post('/signin',(req,res)=>{
     })
 })
 
+router.post('/reset-password',(req,res)=>{
+     crypto.randomBytes(32,(err,buffer)=>{
+         if(err){
+             console.log(err)
+         }
+         const token = buffer.toString("hex")
+         User.findOne({email:req.body.email})
+         .then(user=>{
+             if(!user){
+                 return res.status(422).json({error:"User dont exists with that email"})
+             }
+             user.resetToken = token
+             user.expireToken = Date.now() + 3600000
+             user.save().then((result)=>{
+                 transporter.sendMail({
+                     to:user.email,
+                     from:"siddharthvaidon@gmail.com",
+                     subject:"password reset",
+                     html:`
+                     <p>You requested for password reset</p>
+                     <h5>click in this <a href="${HOST}/reset/${token}">link</a> to reset password</h5>
+                     `
+                 })
+                 res.json({message:"check your email"})
+                 console.log("Mail Sent!!")
+             })
+
+         })
+     })
+})
+
 
 module.exports = router

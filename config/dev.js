@@ -3,5 +3,4 @@ module.exports={
     JWT_SECRET:"ewewewewer",
     SENDGRID_API:"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",
     HOST:"http:localhost:3000"
-
 }

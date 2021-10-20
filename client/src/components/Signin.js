@@ -41,7 +41,7 @@ const SignIn  = ()=>{
                localStorage.setItem("jwt",data.token)
                localStorage.setItem("user",JSON.stringify(data.user))
                dispatch({type:"USER",payload:data.user})
-
+               console.log(data)
                toast("LOG IN SUCCESSFUL",{position: toast.POSITION.TOP_LEFT})
                history.push('/myfollowingpost')
            }
